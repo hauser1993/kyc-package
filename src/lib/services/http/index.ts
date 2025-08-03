@@ -8,8 +8,7 @@ import {
 } from '../../contexts/configuration/getters';
 import { AnyRecord } from '../../../types';
 
-const uploadFileEndpoint = getUploadFileEndpoint();
-const updateContextEndpoint = getUpdateContextEndpoint();
+// Remove these eager evaluations - endpoints will be resolved when needed
 
 export const generateParams = (data: IDocumentVerificationResponse): ISelectedParams => {
   const params: ISelectedParams = { sync: true };
@@ -131,7 +130,7 @@ const createDocument = (
 });
 
 const updateContext = async (context: Record<string, unknown>) => {
-  return await httpPatch(updateContextEndpoint, { context });
+  return await httpPatch(getUpdateContextEndpoint(), { context });
 };
 
 export const verifyDocuments = async (data: IStoreData): Promise<string> => {
@@ -147,7 +146,7 @@ export const verifyDocuments = async (data: IStoreData): Promise<string> => {
       const formData = new FormData();
       formData.append('file', base64ToBlob(page.base64 as string), `${doc.type}.jpeg`);
 
-      const { id } = await httpPost<{ id: string }>(uploadFileEndpoint, formData);
+      const { id } = await httpPost<{ id: string }>(getUploadFileEndpoint(), formData);
 
       return { ballerineFileId: id, metadata: { side: page.side } };
     }),
