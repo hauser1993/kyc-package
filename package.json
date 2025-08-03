@@ -22,7 +22,7 @@
   "types": "dist/index.d.ts",
   "name": "@hauser1993/kyc-sdk",
   "private": false,
-  "version": "1.0.1",
+  "version": "0.1.0",
   "type": "module",
   "files": [
     "dist"

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic KYC Integration</title>
+    
+    <!-- Include Ballerine SDK -->
+    <script crossorigin src="https://cdn.ballerine.io/js/1.5.112/ballerine-sdk.umd.cjs"></script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .kyc-container {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        
+        button:hover {
+            background: #0056b3;
+        }
+        
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Basic KYC Integration</h1>
+    
+    <div class="status" id="status">Ready to start KYC verification</div>
+    
+    <button onclick="startKYC()">Start KYC Verification</button>
+    <button onclick="startKYCModal()">Start KYC Modal</button>
+    
+    <!-- Container for KYC flow -->
+    <div class="kyc-container" id="kyc-container">
+        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #666;">
+            KYC Flow will appear here
+        </div>
+    </div>
+
+    <script>
+        // Basic KYC configuration
+        const kycConfig = {
+            endUserInfo: {
+                id: 'user-' + Date.now(), // Unique user ID
+                firstName: 'John',
+                lastName: 'Doe',
+                email: 'john@example.com'
+            },
+            backendConfig: {
+                baseUrl: 'https://your-backend-url.com', // Replace with your backend URL
+                auth: {
+                    method: 'jwt',
+                    authorizationHeader: 'Bearer your-jwt-token'
+                }
+            },
+            // Development Mode (optional)
+            settings: {
+                isDevelopment: true
+            },
+            metricsConfig: {
+                enabled: true
+            },
+            uiConfig: {
+                general: {
+                    colors: {
+                        primary: '#007bff'
+                    }
+                },
+                flows: {
+                    'my-kyc-flow': {
+                        steps: [
+                            { name: 'welcome', id: 'welcome' },
+                            { 
+                                name: 'document-selection', 
+                                id: 'document-selection',
+                                documentOptions: [
+                                    { type: 'id_card', kind: 'id_card' },
+                                    { type: 'drivers_license', kind: 'drivers_license' },
+                                    { type: 'passport', kind: 'passport' }
+                                ]
+                            },
+                            { name: 'document-photo', id: 'document-photo' },
+                            { name: 'check-document', id: 'check-document' },
+                            { name: 'document-photo-back-start', id: 'document-photo-back-start' },
+                            { name: 'document-photo-back', id: 'document-photo-back' },
+                            { name: 'check-document-photo-back', id: 'check-document-photo-back' },
+                            { name: 'selfie-start', id: 'selfie-start' },
+                            { name: 'selfie', id: 'selfie' },
+                            { name: 'check-selfie', id: 'check-selfie' },
+                            { name: 'loading', id: 'loading' },
+                            { name: 'final', id: 'final' }
+                        ]
+                    }
+                }
+            }
+        };
+
+        // Start KYC flow in container
+        async function startKYC() {
+            try {
+                updateStatus('Initializing KYC flow...');
+                
+                // Initialize the SDK
+                await BallerineSDK.flows.init(kycConfig);
+                
+                // Mount the flow in the container
+                await BallerineSDK.flows.mount({
+                    flowName: 'my-kyc-flow',
+                    elementId: 'kyc-container',
+                    callbacks: {
+                        onFlowComplete: (payload) => {
+                            updateStatus('✅ KYC verification completed successfully!');
+                            console.log('KYC Complete:', payload);
+                        },
+                        onFlowError: (payload) => {
+                            updateStatus('❌ KYC verification failed');
+                            console.error('KYC Error:', payload);
+                        },
+                        onFlowExit: (payload) => {
+                            updateStatus('⚠️ KYC flow was exited');
+                            console.log('KYC Exit:', payload);
+                        }
+                    }
+                });
+                
+                updateStatus('✅ KYC flow loaded successfully');
+                
+            } catch (error) {
+                updateStatus('❌ Failed to initialize KYC: ' + error.message);
+                console.error('KYC Error:', error);
+            }
+        }
+
+        // Start KYC flow as modal
+        async function startKYCModal() {
+            try {
+                updateStatus('Initializing KYC modal...');
+                
+                // Initialize the SDK
+                await BallerineSDK.flows.init(kycConfig);
+                
+                // Mount the flow as modal
+                await BallerineSDK.flows.mount({
+                    flowName: 'my-kyc-flow',
+                    useModal: true,
+                    callbacks: {
+                        onFlowComplete: (payload) => {
+                            updateStatus('✅ KYC verification completed successfully!');
+                            console.log('KYC Complete:', payload);
+                        },
+                        onFlowError: (payload) => {
+                            updateStatus('❌ KYC verification failed');
+                            console.error('KYC Error:', payload);
+                        },
+                        onFlowExit: (payload) => {
+                            updateStatus('⚠️ KYC flow was exited');
+                            console.log('KYC Exit:', payload);
+                        }
+                    }
+                });
+                
+                updateStatus('✅ KYC modal loaded successfully');
+                
+            } catch (error) {
+                updateStatus('❌ Failed to initialize KYC modal: ' + error.message);
+                console.error('KYC Error:', error);
+            }
+        }
+
+        function updateStatus(message) {
+            document.getElementById('status').textContent = message;
+        }
+    </script>
+</body>
+</html> 
