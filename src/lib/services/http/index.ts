@@ -141,18 +141,18 @@ export const verifyDocuments = async (data: IStoreData): Promise<string> => {
     });
   }
 
-  const promises = data.docs.flatMap(doc =>
-    doc.pages.map(async page => {
+  // Upload files sequentially instead of in parallel to avoid race conditions
+  const results: { ballerineFileId: string; metadata: { side: string } }[] = [];
+  for (const doc of data.docs) {
+    for (const page of doc.pages) {
       const formData = new FormData();
       formData.append('file', base64ToBlob(page.base64 as string), `${doc.type}-${page.side}.jpeg`);
 
       const { id } = await httpPost<{ id: string }>(getUploadFileEndpoint(), formData);
 
-      return { ballerineFileId: id, metadata: { side: page.side } };
-    }),
-  );
-
-  const results = await Promise.all(promises);
+      results.push({ ballerineFileId: id, metadata: { side: page.side } });
+    }
+  }
 
   const documents = data.docs.map(doc => createDocument(doc, results));
 
