@@ -19,7 +19,6 @@
     "kyb",
     "custom"
   ],
-  "types": "dist/index.d.ts",
   "name": "@hauser1993/kyc-sdk",
   "private": false,
   "version": "1.0.2",
@@ -31,8 +30,10 @@
   "module": "./dist/ballerine-sdk.js",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/ballerine-sdk.js",
-      "require": "./dist/ballerine-sdk.umd.cjs"
+      "require": "./dist/ballerine-sdk.umd.cjs",
+      "default": "./dist/ballerine-sdk.js"
     }
   },
   "scripts": {

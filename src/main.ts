@@ -11,6 +11,9 @@ import {
   mergeTranslationsOverrides,
 } from './lib/services/configuration-manager';
 
+// Export types for consumers
+export * from './types/BallerineSDK';
+
 export const flows: BallerineSDKFlows = {
   init: config => {
     return new Promise((resolve, reject) => {

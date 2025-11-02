@@ -165,6 +165,11 @@
       "description": "Your identity has been successfully verified.",
       "button": "Next"
     },
+    "submitted": {
+      "title": "Documents Submitted",
+      "description": "Your documents have been successfully submitted and are being reviewed. You will be notified once the verification is complete.",
+      "button": "Close"
+    },
     "loader": {
       "text-one": "We're verifying your documents",
       "text-two": "This may take a few seconds",
@@ -354,6 +359,11 @@
       "title": "Erfolg",
       "description": "Ihre Identität wurde erfolgreich verifiziert.",
       "button": "Weiter"
+    },
+    "submitted": {
+      "title": "Dokumente eingereicht",
+      "description": "Ihre Dokumente wurden erfolgreich eingereicht und werden überprüft. Sie werden benachrichtigt, sobald die Verifizierung abgeschlossen ist.",
+      "button": "Schließen"
     },
     "loader": {
       "text-one": "Wir verifizieren Ihre Dokumente",
@@ -549,6 +559,11 @@
       "description": "es: Your identity has been successfully verified.",
       "button": "es: Next"
     },
+    "submitted": {
+      "title": "es: Documents Submitted",
+      "description": "es: Your documents have been successfully submitted and are being reviewed. You will be notified once the verification is complete.",
+      "button": "es: Close"
+    },
     "loader": {
       "text-one": "es: We're verifying your documents",
       "text-two": "es: This may take a few seconds",
@@ -700,6 +715,11 @@
       "title": "Imefanikiwa",
       "description": "Utambulisho wako umefanikiwa kuthibitishwa.",
       "button": "Endelea"
+    },
+    "submitted": {
+      "title": "Nyaraka Zimetumwa",
+      "description": "Nyaraka zako zimetumwa kikamilifu na zinakaguliwa. Utataarifwa mara tu uthibitishaji ukimalizika.",
+      "button": "Funga"
     },
     "loader": {
       "text-one": "Tunathibitisha nyaraka zako",

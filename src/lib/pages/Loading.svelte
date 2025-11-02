@@ -70,6 +70,11 @@
         await preloadStepById($configuration, configuration, 'final', flowName);
         $currentStepId = 'final';
       }
+      if (response.status === VerificationStatuses.SUBMITTED) {
+        $currentParams = params;
+        await preloadStepById($configuration, configuration, 'submitted', flowName);
+        $currentStepId = 'submitted';
+      }
     } catch (error) {
       toast.push(t('general', 'errorDocumentVerification'));
       veryficationTimeout = setTimeout(() => checkStatus(data), 2000);

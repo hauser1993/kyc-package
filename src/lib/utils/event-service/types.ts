@@ -22,6 +22,7 @@ export const VerificationStatuses = {
   PENDING: 'pending',
   ERROR: 'error',
   DATA_COLLECTION: 'data_collection',
+  SUBMITTED: 'submitted',
 } as const;
 
 export type TVerificationStatuses = ObjectValues<typeof VerificationStatuses>;

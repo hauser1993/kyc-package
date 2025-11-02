@@ -7,6 +7,7 @@ export { default as DocumentPhotoBackStart } from './DocumentPhotoBackStart.svel
 export { default as DocumentPhotoBack } from './DocumentPhotoBack.svelte';
 export { default as CheckDocumentPhotoBack } from './CheckDocumentPhotoBack.svelte';
 export { default as Final } from './Final.svelte';
+export { default as Submitted } from './Submitted.svelte';
 export { default as SelfieStart } from './SelfieStart.svelte';
 export { default as Selfie } from './Selfie.svelte';
 export { default as CheckSelfie } from './CheckSelfie.svelte';
