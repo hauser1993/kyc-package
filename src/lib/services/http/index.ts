@@ -144,7 +144,7 @@ export const verifyDocuments = async (data: IStoreData): Promise<string> => {
   const promises = data.docs.flatMap(doc =>
     doc.pages.map(async page => {
       const formData = new FormData();
-      formData.append('file', base64ToBlob(page.base64 as string), `${doc.type}.jpeg`);
+      formData.append('file', base64ToBlob(page.base64 as string), `${doc.type}-${page.side}.jpeg`);
 
       const { id } = await httpPost<{ id: string }>(getUploadFileEndpoint(), formData);
 
